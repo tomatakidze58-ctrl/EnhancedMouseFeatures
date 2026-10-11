@@ -1,0 +1,7 @@
+plugins {
+    id 'base'
+}
+
+def selectedLoader = providers.gradleProperty('loader').getOrElse('fabric')
+tasks.named('build') { dependsOn ":${selectedLoader}:build" }
+tasks.named('clean') { dependsOn ":${selectedLoader}:clean" }

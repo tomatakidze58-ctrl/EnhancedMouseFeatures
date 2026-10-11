@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.neoforged.net/releases/' }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = 'EnhancendMouseFeatures'
+def selectedLoader = providers.gradleProperty('loader').getOrElse('fabric')
+if (!(selectedLoader in ['fabric', 'forge', 'neoforge'])) {
+    throw new GradleException('Choose -Ploader=fabric, forge, or neoforge')
+}
+include selectedLoader
+if (selectedLoader == 'fabric' && gradle.startParameter.taskNames.any { it.contains('fabric-compat-test:') }) {
+    include 'fabric-compat-test'
+}

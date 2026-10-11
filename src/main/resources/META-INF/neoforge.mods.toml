@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="${neoLoaderVersion}"
+license="BSD-3-Clause"
+
+[[mods]]
+modId="enhancendmousefeatures"
+version="${version}"
+displayName="EnhancendMouseFeatures"
+logoFile="enhancendmousefeatures_logo.png"
+credits="${modCredits}"
+authors="Ivan Molodetskikh (YaLTeR), original mod; tomatakidze58-ctrl, rebranding"
+description="${modDescription}"
+
+[[mixins]]
+config="enhancendmousefeatures.mixins.json"

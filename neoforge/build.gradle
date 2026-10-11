@@ -1,0 +1,97 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+version = project.modVersion
+group = "dev.enhancendmousefeatures"
+base.archivesName = "EnhancendMouseFeatures-neoforge-mc${project.neoMcVersion}"
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.modJavaVersion)
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['../src/main/java']
+            exclude 'yalter/mousetweaks/fabric'
+            exclude 'yalter/mousetweaks/ModMenuApiImpl.java'
+            exclude 'yalter/mousetweaks/forge'
+        }
+
+        resources {
+            srcDirs = ['../src/main/resources']
+            exclude 'fabric.mod.json'
+            exclude 'META-INF/mods.toml'
+        }
+    }
+}
+
+processResources {
+    inputs.property "version", project.modVersion
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand([
+                "version": project.modVersion,
+                "neoLoaderVersion": project.neoLoaderVersion,
+                "modCredits": project.modCredits,
+                "modDescription": project.modDescription,
+        ])
+    }
+}
+
+neoForge {
+    version = project.neoVersion
+
+    runs {
+        client {
+            client()
+            systemProperty 'forge.enabledGameTestNamespaces', "enhancendmousefeatures"
+        }
+
+        server {
+            server()
+            systemProperty 'forge.enabledGameTestNamespaces', "enhancendmousefeatures"
+            programArgument '--nogui'
+        }
+
+        // For testing datagen.
+        clientData {
+            clientData()
+            programArguments.addAll '--mod', 'enhancendmousefeatures',
+                    '--all',
+                    '--output', layout.buildDirectory.dir('generated/resources').get().asFile.absolutePath,
+                    '--existing', file('../src/main/resources').absolutePath
+        }
+
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        enhancendmousefeatures {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+tasks.register('srcJar', Jar) {
+    archiveClassifier.set("src")
+    from sourceSets.main.allJava
+}
+
+tasks.register('apiJar', Jar) {
+    archiveClassifier.set("api")
+    from(sourceSets.main.output) {
+        include 'yalter/mousetweaks/api/**'
+    }
+}
+
+tasks.named("assemble") {
+    dependsOn(srcJar)
+    dependsOn(apiJar)
+}
+
+tasks.withType(Jar).configureEach {
+    from('../LICENSE')
+    from('../NOTICE.md')
+}

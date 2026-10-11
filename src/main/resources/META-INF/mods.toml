@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="${forgeLoaderVersion}"
+license="BSD-3-Clause"
+clientSideOnly=true
+
+[[mods]]
+modId="enhancendmousefeatures"
+version="${version}"
+displayName="EnhancendMouseFeatures"
+logoFile="enhancendmousefeatures_logo.png"
+credits="${modCredits}"
+authors="Ivan Molodetskikh (YaLTeR), original mod; tomatakidze58-ctrl, rebranding"
+description="${modDescription}"

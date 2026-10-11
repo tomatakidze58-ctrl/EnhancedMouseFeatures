@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "enhancendmousefeatures",
+  "provides": ["mousetweaks"],
+  "version": "${version}",
+  "name": "EnhancendMouseFeatures",
+  "description": "${modDescription}",
+  "authors": [
+    "Ivan Molodetskikh (YaLTeR), original mod",
+    "tomatakidze58-ctrl, rebranding"
+  ],
+  "contributors": [
+    "mezz",
+    "juliand665",
+    "panoskj",
+    "FabiClawZ",
+    "ErrorMikey",
+    "livInFear",
+    "Abelpro678"
+  ],
+  "license": "BSD-3-Clause",
+  "icon": "enhancendmousefeatures_logo.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "yalter.mousetweaks.fabric.MouseTweaksFabric"
+    ],
+    "modmenu": [
+      "yalter.mousetweaks.ModMenuApiImpl"
+    ]
+  },
+  "mixins": [
+    "enhancendmousefeatures.mixins.json",
+    "enhancendmousefeatures-fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricLoaderVersion}",
+    "fabric-api": "*",
+    "minecraft": "~${fabricMcVersion}",
+    "java": ">=${modJavaVersion}"
+  },
+  "suggests": { "modmenu": ">=20.0.3" }
+}
